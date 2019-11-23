@@ -1,6 +1,6 @@
 ///
 /// @file ESP8266.cpp
-/// @brief The implementation of class ESP8266 for Pokitto plus. 
+/// @brief The implementation of class ESP8266. 
 /// @author bl_ackrain 
 /// @date 2019
 ///
@@ -630,6 +630,26 @@ bool ESP8266::espNowDeInit()
     this->sendCommand(Commands::espNowDeInit); 
 
     return this->receiveOk(200);
+}
+
+//
+// crypto
+//
+
+
+bool ESP8266::sha1(const std::uint8_t data[], const std::uint16_t size, std::uint8_t hash[20])
+{
+    this->sendCommand(Commands::sha1);
+    
+    this->write16(size);
+
+    for(std::size_t i=0; i<size;i++)
+        this->uart->putc(data[i]);
+    
+    if(this->getResponse(300)!=Response::Data)
+        return false;
+
+    return this->readBuffer(hash, 20, 200);
 }
 
 

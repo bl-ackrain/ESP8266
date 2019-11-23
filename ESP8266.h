@@ -75,6 +75,9 @@ enum class Commands: std::uint16_t
     espNowSend,
     espNowReceive,
     espNowDeInit,
+
+    // crypto
+    sha1,
 };
 
 enum class Response: std::uint16_t
@@ -773,4 +776,16 @@ private:
     ///
     bool espNowDeInit();
   
+    //
+    // crypto
+    //
+
+    /// @brief
+    /// Calculate sha1 hash.
+    /// 
+    /// @retval true - success.
+    /// @retval false - failure.
+    ///
+    bool sha1(const std::uint8_t data[], const std::uint16_t size, std::uint8_t hash[20]);
+
 };
